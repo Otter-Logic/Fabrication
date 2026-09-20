@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>OtterLogic.Fabrication</RootNamespace>
+    <AssemblyName>OtterLogic.Fabrication</AssemblyName>
+    <!-- A domain toolkit: making the structure rather than analysing it —
+         panelising a surface into what a machine can cast, and the part
+         families that come out of it.
+
+         Named for the domain it has an opinion about, not for the algorithms it
+         uses. Those live a layer down in OtterLogic.Unsupervised and
+         OtterLogic.MachineLearning, where the structural toolkit reaches them
+         too. No UI, no Grasshopper, and no dependency on a sibling toolkit. The
+         Grasshopper section is "Fabrication". -->
+
+    <IsPackable>true</IsPackable>
+    <PackageId>OtterLogic.Fabrication</PackageId>
+    <Description>Fabrication tools for the OtterLogic Rhino tools - panelising surfaces into what a machine can make, and finding the panel types that repeat.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Otter-Logic/Fabrication</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Otter-Logic/Fabrication</RepositoryUrl>
+    <PackageTags>rhino;rhino3d;grasshopper;computational-design;machine-learning;fabrication;precast</PackageTags>
+
+  </PropertyGroup>
+
+  <!-- A sibling checkout wins; the published package is the fallback. Clone the
+       repos side by side and the inner loop is unchanged; CI has no siblings, so
+       it builds against the published packages. -->
+  <Choose>
+    <When Condition="Exists('$(MSBuildThisFileDirectory)..\..\..\Unsupervised\src\OtterLogic.Unsupervised\OtterLogic.Unsupervised.csproj')">
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\Unsupervised\src\OtterLogic.Unsupervised\OtterLogic.Unsupervised.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <PackageReference Include="OtterLogic.Unsupervised" Version="[$(Version)]" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+</Project>
