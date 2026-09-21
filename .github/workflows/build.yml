@@ -9,9 +9,9 @@ name: build
 # follows Core rather than any need of this code. The test project sets
 # RollForward=LatestMajor, so it runs on whatever the runner has.
 #
-# Three siblings. This repo names only Unsupervised; Unsupervised references
-# MachineLearning and MachineLearning references Core, so both have to be on
-# disk too even though nothing here names them. Miss one and it falls through to
+# Four siblings. This repo names only Unsupervised; Unsupervised references
+# MachineLearning and MachineLearning references Core and Graphs, so all three
+# have to be on disk too even though nothing here names them. Miss one and it falls through to
 # a NuGet package that does not exist yet, which fails *restore* and reads as a
 # missing package rather than a missing checkout.
 #
@@ -41,6 +41,15 @@ jobs:
         with:
           repository: Otter-Logic/Core
           path: Core
+          token: ${{ secrets.OTTER_CI_TOKEN }}
+
+      # Graphs sits beside Core under MachineLearning, which references it - so it
+      # has to be on disk wherever MachineLearning is, named or not. Miss it and
+      # restore fails with NU1101 for OtterLogic.Graphs.
+      - uses: actions/checkout@v4
+        with:
+          repository: Otter-Logic/Graphs
+          path: Graphs
           token: ${{ secrets.OTTER_CI_TOKEN }}
 
       - uses: actions/checkout@v4
