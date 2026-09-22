@@ -4,8 +4,11 @@
     <RootNamespace>OtterLogic.Fabrication</RootNamespace>
     <AssemblyName>OtterLogic.Fabrication</AssemblyName>
     <!-- A domain toolkit: making the structure rather than analysing it —
-         panelising a surface into what a machine can cast, and the part
-         families that come out of it.
+         panelising a surface into what a machine can cast, the part families
+         that come out of it, and what the connections are and how many kinds
+         there are. The connection tools read joints through
+         OtterLogic.StructuralEngine, the same reading the structural and
+         construction toolkits use.
 
          Named for the domain it has an opinion about, not for the algorithms it
          uses. Those live a layer down in OtterLogic.Unsupervised and
@@ -35,6 +38,19 @@
     <Otherwise>
       <ItemGroup>
         <PackageReference Include="OtterLogic.Unsupervised" Version="[$(Version)]" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <Choose>
+    <When Condition="Exists('$(MSBuildThisFileDirectory)..\..\..\StructuralEngine\src\OtterLogic.StructuralEngine\OtterLogic.StructuralEngine.csproj')">
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\StructuralEngine\src\OtterLogic.StructuralEngine\OtterLogic.StructuralEngine.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <PackageReference Include="OtterLogic.StructuralEngine" Version="[$(Version)]" />
       </ItemGroup>
     </Otherwise>
   </Choose>

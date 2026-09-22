@@ -7,17 +7,20 @@ what a machine can make, how many kinds of it a job needs, and how to lay it out
 so as few kinds as possible are needed.
 
 ```
-Core  ->  MachineLearning  ->  Unsupervised  ->  Fabrication
-          (features, PCA,      (clustering      (this repo: what a
-           the graph and        and fusion)      fabricator has to make)
-           eigen mechanism)
+Core  ->  MachineLearning  ->  Unsupervised  ->  StructuralEngine  ->  Fabrication
+          (features, PCA,      (clustering      (reading a model:     (this repo: what a
+           the graph and        and fusion)      joints, members,      fabricator has to
+           eigen mechanism)                      assemblies)           make)
 ```
 
 A domain toolkit, **sibling** to
 [StructuralDesign](https://github.com/Otter-Logic/StructuralDesign) — never a
-dependent of it. The line between them is what the question is about: a
-structural tool asks how a structure behaves, one here asks what has to be made
-and how often the same thing is made twice.
+dependent of it. What both need — how a stick model is read as joints and
+members — lives below them in
+[StructuralEngine](https://github.com/Otter-Logic/StructuralEngine). The line
+between the two toolkits is what the question is about: a structural tool asks
+how a structure behaves, one here asks what has to be made and how often the
+same thing is made twice.
 
 ## What is here
 
@@ -80,11 +83,19 @@ from a smallest size written into the code.
 The engine keeps what it **measures** apart from what it **calls** things. Which
 panels exist and which of them are the same is measured; the marks P1, T1, C1 and
 the order they come in are a house style, and live alone in `PanelNaming`.
+**Joint Signature** and **Connection Typology** — lines, supports and a depth
+per line in; every joint described by the arms that meet at it — how many, how
+each stands, at what angle, which way it is handed — and the joints grouped into
+the connection types a job has, with an exemplar of each. Connection detailing
+is the fabricator's question, which is why they are here, though they read the
+joints with the same `StructureGraph` the structural tools do.
 
 ## Rules
 
-- Depends on [Unsupervised](https://github.com/Otter-Logic/Unsupervised) (which
-  carries [MachineLearning](https://github.com/Otter-Logic/MachineLearning) and
+- Depends on [StructuralEngine](https://github.com/Otter-Logic/StructuralEngine)
+  and [Unsupervised](https://github.com/Otter-Logic/Unsupervised) (which carry
+  [MachineLearning](https://github.com/Otter-Logic/MachineLearning),
+  [Graphs](https://github.com/Otter-Logic/Graphs) and
   [Core](https://github.com/Otter-Logic/Core) transitively). Never another domain
   toolkit, never an adaptor.
 - No UI. No Grasshopper. Adaptors wrap this; it does not know they exist.
@@ -99,8 +110,10 @@ dotnet test OtterLogic.slnx
 Pure geometry over plain arrays — no Rhino, no licence needed, runs anywhere.
 
 Clone [Core](https://github.com/Otter-Logic/Core),
-[MachineLearning](https://github.com/Otter-Logic/MachineLearning) and
-[Unsupervised](https://github.com/Otter-Logic/Unsupervised) as sibling folders and
+[Graphs](https://github.com/Otter-Logic/Graphs),
+[MachineLearning](https://github.com/Otter-Logic/MachineLearning),
+[Unsupervised](https://github.com/Otter-Logic/Unsupervised) and
+[StructuralEngine](https://github.com/Otter-Logic/StructuralEngine) as sibling folders and
 the project references resolve against your working copy; without them the build
 falls back to the published packages.
 
